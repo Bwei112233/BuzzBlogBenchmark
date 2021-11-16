@@ -3,6 +3,7 @@
 
 import argparse
 import datetime
+import json
 import random
 import string
 
@@ -51,13 +52,26 @@ class BuzzBlogSession(ATLoad.Session):
     letters = string.ascii_lowercase + string.ascii_uppercase + string.digits
     return "".join(random.choice(letters) for i in range(length))
 
+  def _random_name(self, type):
+    if type == "first":
+      names = ["Alexandra", "Anita", "Anya", "Adisa", "Annie", "Barry", "Julio", "Kenya", "Ola", "Jaimes", "Jessica", "Valencia", "Xavier", "Zula", "Radha", "Olivia", "Jason"]
+      return random.choice(names)
+    if type == "last":
+      names = ["Smith", "Johnson", "Garcia", "Williams", "Rodriguez", "Wilson", "King", "Nguyen", "Chen", "Singh", "Ali", "Russo", "Adebayo", "Onai", "Wang", "Gupta", "Jameson"]
+      return random.choice(names)
+
+  def _random_username(self, first_name): 
+    length = random.randint(1, 4)
+    return first_name + "".join(random.choice(string.digits) for i in range(length))
+
   def create_account(self):
+    first_name = self._random_name("first")
     r = self._request("post", "/account",
         json={
-            "username": self._random_string(16),
+            "username": self._random_username(first_name),
             "password": self._password,
-            "first_name": self._random_string(16),
-            "last_name": self._random_string(16)
+            "first_name": first_name,
+            "last_name": self._random_name("last")
         })
     assert r.status_code == 200
     self._my_account = r.json()
@@ -66,14 +80,20 @@ class BuzzBlogSession(ATLoad.Session):
     r = self._request("put", "/account/%s" % self._my_account["id"],
         json={
             "password": self._password,
-            "first_name": self._random_string(16),
-            "last_name": self._random_string(16)
+            "first_name": self._random_name("first"),
+            "last_name": self._random_name("last")
         })
     if r.status_code == 200:
       self._my_account = r.json()
 
+  def _random_post(self):
+    f = open("sample_posts.json",)
+    data = json.load(f)
+    post = random.choice(data["sample_posts"])
+    return post["post"]
+
   def create_post(self):
-    r = self._request("post", "/post", json={"text": self._random_string(140)})
+    r = self._request("post", "/post", json={"text": self._random_post()})
     if r.status_code == 200:
       self._my_posts.append(r.json())
 
@@ -110,7 +130,7 @@ class BuzzBlogSession(ATLoad.Session):
 
   def retrieve_recent_posts(self):
     r = self._request("get", "/post",
-        params={"limit": 8, "offset": 0})
+        params={"limit": 32, "offset": 0})
     if r.status_code == 200 and r.json():
       self._other_post = random.choice(r.json())
       self._other_account = random.choice(r.json())["author"]
@@ -122,7 +142,7 @@ class BuzzBlogSession(ATLoad.Session):
   def retrieve_post_likes(self):
     if self._other_post:
       self._request("get", "/like", params={"post_id": self._other_post["id"],
-          "limit": 8, "offset": 0})
+          "limit": 32, "offset": 0})
 
   def retrieve_account(self):
     if self._other_account:
@@ -131,7 +151,7 @@ class BuzzBlogSession(ATLoad.Session):
   def retrieve_account_posts(self):
     if self._other_account:
       r = self._request("get", "/post",
-          params={"author_id": self._other_account["id"], "limit": 8,
+          params={"author_id": self._other_account["id"], "limit": 32,
               "offset": 0})
       if r.status_code == 200:
         self._other_post = random.choice(r.json())
@@ -139,7 +159,7 @@ class BuzzBlogSession(ATLoad.Session):
   def retrieve_account_followers(self):
     if self._other_account:
       r = self._request("get", "/follow",
-          params={"followee_id": self._other_account["id"], "limit": 8,
+          params={"followee_id": self._other_account["id"], "limit": 32,
               "offset": 0})
       if r.status_code == 200 and r.json():
         self._other_account = random.choice(r.json())["follower"]
@@ -147,7 +167,7 @@ class BuzzBlogSession(ATLoad.Session):
   def retrieve_account_followees(self):
     if self._other_account:
       r = self._request("get", "/follow",
-          params={"follower_id": self._other_account["id"], "limit": 8,
+          params={"follower_id": self._other_account["id"], "limit": 32,
               "offset": 0})
       if r.status_code == 200 and r.json():
         self._other_account = random.choice(r.json())["followee"]
@@ -155,7 +175,7 @@ class BuzzBlogSession(ATLoad.Session):
   def retrieve_account_likes(self):
     if self._other_account:
       self._request("get", "/like",
-          params={"account_id": self._other_account["id"], "limit": 8,
+          params={"account_id": self._other_account["id"], "limit": 32,
               "offset": 0})
 
 
