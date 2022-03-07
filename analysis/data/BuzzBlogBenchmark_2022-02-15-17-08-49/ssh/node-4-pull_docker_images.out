@@ -1,0 +1,55 @@
+account_v0.1: Pulling from rodrigoalveslima/buzzblog
+08c01a0ec47e: Pulling fs layer
+f3d82a39c30d: Pulling fs layer
+a131461d7686: Pulling fs layer
+ef835adefd5f: Pulling fs layer
+9d31e70b9231: Pulling fs layer
+10831eed370f: Pulling fs layer
+ab30313ca614: Pulling fs layer
+41e987e6bdf2: Pulling fs layer
+10831eed370f: Waiting
+9d31e70b9231: Waiting
+0a1f9b836487: Pulling fs layer
+0a1f9b836487: Waiting
+41e987e6bdf2: Waiting
+06400e298300: Pulling fs layer
+c14189c1d859: Pulling fs layer
+977861cb3bc3: Pulling fs layer
+c14189c1d859: Waiting
+06400e298300: Waiting
+f3d82a39c30d: Verifying Checksum
+f3d82a39c30d: Download complete
+08c01a0ec47e: Verifying Checksum
+08c01a0ec47e: Download complete
+ef835adefd5f: Verifying Checksum
+ef835adefd5f: Download complete
+9d31e70b9231: Verifying Checksum
+9d31e70b9231: Download complete
+08c01a0ec47e: Pull complete
+f3d82a39c30d: Pull complete
+10831eed370f: Verifying Checksum
+10831eed370f: Download complete
+ab30313ca614: Verifying Checksum
+ab30313ca614: Download complete
+0a1f9b836487: Verifying Checksum
+0a1f9b836487: Download complete
+41e987e6bdf2: Verifying Checksum
+41e987e6bdf2: Download complete
+c14189c1d859: Download complete
+06400e298300: Download complete
+977861cb3bc3: Download complete
+a131461d7686: Verifying Checksum
+a131461d7686: Download complete
+a131461d7686: Pull complete
+ef835adefd5f: Pull complete
+9d31e70b9231: Pull complete
+10831eed370f: Pull complete
+ab30313ca614: Pull complete
+41e987e6bdf2: Pull complete
+0a1f9b836487: Pull complete
+06400e298300: Pull complete
+c14189c1d859: Pull complete
+977861cb3bc3: Pull complete
+Digest: sha256:625bb85097c6cdba74306309ec55f7ecb17bae1f0ccd5b3145620a7e7d01b2bf
+Status: Downloaded newer image for rodrigoalveslima/buzzblog:account_v0.1
+docker.io/rodrigoalveslima/buzzblog:account_v0.1
